@@ -1,0 +1,2 @@
+class Citibike < ApplicationRecord
+end

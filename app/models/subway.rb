@@ -1,3 +1,3 @@
-class Subway < ActiveRecord::Base
+class Subway < ApplicationRecord
 
 end
