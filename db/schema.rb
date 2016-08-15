@@ -10,21 +10,38 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-
-ActiveRecord::Schema.define(version: 20160812211243) do
+ActiveRecord::Schema.define(version: 20160815140409) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-
   create_table "citibikes", force: :cascade do |t|
-    t.float 'latitude'
-    t.float 'longitude'
+    t.float    "latitude"
+    t.float    "longitude"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "crimes", force: :cascade do |t|
-    t.float "latitude"
-    t.float "longitude"
+    t.float    "latitude"
+    t.float    "longitude"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "parks", force: :cascade do |t|
+    t.string "name"
+    t.string "address"
+    t.float  "latitude"
+    t.float  "longitude"
+  end
+
+  create_table "schools", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "district"
+    t.float    "score"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "subways", force: :cascade do |t|
@@ -32,13 +49,6 @@ ActiveRecord::Schema.define(version: 20160812211243) do
     t.float  "latitude"
     t.float  "longitude"
     t.string "lines"
-  end
-  create_table "schools", force: :cascade do |t|
-    t.string   "name"
-    t.integer  "district"
-    t.float    "score"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
 end
