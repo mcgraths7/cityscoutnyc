@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  total_score: 1
+  safety_score: 1
+  education_score: 1
+  transportation_score: 1
+  recreation_score: 1
+  cost_of_living_score: 1
+
+two:
+  total_score: 1
+  safety_score: 1
+  education_score: 1
+  transportation_score: 1
+  recreation_score: 1
+  cost_of_living_score: 1

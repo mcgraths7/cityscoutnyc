@@ -2819,4 +2819,4 @@
     "URL": "http://www.mta.info/nyct/subway/index.html",
     "LINE": "D-F-N-Q"
   }
-].map{ |subway| Subway.create(name: subway[:NAME], latitude: subway[:the_geom].gsub(/[^0-9\.\-]/, " ").split(" ")[0], longitude: subway[:the_geom].gsub(/[^0-9\.\-]/, " ").split(" ")[1], lines: subway[:LINE] )}  
+].map{ |subway| Subway.create(name: subway[:NAME], latitude: subway[:the_geom].gsub(/[^0-9\.\-]/, " ").split(" ")[1], longitude: subway[:the_geom].gsub(/[^0-9\.\-]/, " ").split(" ")[0], lines: subway[:LINE] )}  

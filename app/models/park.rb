@@ -1,11 +1,6 @@
 class Park < ApplicationRecord
 
-  geocoded_by :address => :full_address
-  reverse_geocoded_by :latitude, :longitude, :address => :full_address
-
-  def full_address
-    [street, city, state, country].compact.join(', ')
-  end
+  
 
   def filter_by_distance(latitudeUserInput, longitudeUserInput)
     Park.where('(abs(parks.latitude - ?) < 0.00001) AND (abs(parks.longitude - ?) < 0.00001)', latitudeUserInput, longitudeUserInput)
