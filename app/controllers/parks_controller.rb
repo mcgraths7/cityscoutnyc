@@ -1,10 +1,7 @@
 class ParksController < ApplicationController
+
   def index
-    @parks = Park.all
+    @parks = Park.all.length
     render json: @parks
-  end
-
-  def show
-
   end
 end
