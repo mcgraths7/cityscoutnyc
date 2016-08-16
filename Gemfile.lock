@@ -140,7 +140,6 @@ PLATFORMS
 
 DEPENDENCIES
   active_model_serializers
-  byebug
   geocoder
   listen (~> 3.0.5)
   pg (~> 0.18)
