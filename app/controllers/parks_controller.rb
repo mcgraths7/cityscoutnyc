@@ -1,6 +1,6 @@
 class ParksController < ApplicationController
   def index
-    @posts = Post.all
-    render json: @posts
+    @parks = Park.all.length
+    render json: @parks
   end
 end
