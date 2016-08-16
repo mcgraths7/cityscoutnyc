@@ -12,6 +12,27 @@ class VotingDistrict
     Crime.filter_by_district(lat_max, lat_min, long_max, long_min)
   end
 
+  def bikes_in_district
+    Citibike.filter_by_district(lat_max, lat_min, long_max, long_min)
+  end
+
+  def subways_in_district
+    Subway.filter_by_district(lat_max, lat_min, long_max, long_min)
+  end
+
+  def schools_in_district
+    School.filter_by_district(lat_max, lat_min, long_max, long_min)
+  end
+
+  def parks_in_district
+    Park.filter_by_district(lat_max, lat_min, long_max, long_min)
+  end
+
+  def accidents_in_district
+    Accident.filter_by_district(lat_max, lat_min, long_max, long_min)
+  end
+
+
   # def get_box
   #   boxes = []
   #   coords = COORDS.strip.gsub("\"MULTIPOLYGON ((", "").gsub("))\"", "").gsub(/\s\n/, "")
