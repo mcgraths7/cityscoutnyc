@@ -21,6 +21,8 @@ gem 'puma', '~> 3.0'
 # gem 'rack-cors'
 gem 'active_model_serializers'
 gem 'rack-cors'
+#gem for encoding and decoding geolocation data
+gem 'geocoder'
 
 gem 'pry'
 
