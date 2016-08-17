@@ -1,6 +1,3 @@
-require_relative '../../db/data/ny_voting_districts.rb'
-require "pry"
-
 class VotingDistrict
   attr_reader :lat_max, :lat_min, :long_max, :long_min
   def initialize(arr)

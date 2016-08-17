@@ -6049,4 +6049,4 @@
     "district": "84",
     "school": "Bronx Charter School for Arts"
   }
-].map {|data| School.create({name: data[:school], district: data[:district], score: data[:_overall_score] })}
+].map {|data| School.create({full_address: data[:school] + ', NY', district: data[:district], score: data[:_overall_score], latitude: nil, longitude: nil })}
