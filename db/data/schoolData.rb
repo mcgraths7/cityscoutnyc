@@ -6049,4 +6049,7 @@
     "district": "84",
     "school": "Bronx Charter School for Arts"
   }
-].map {|data| School.create({name: data[:school], district: data[:district], score: data[:_overall_score] })}
+].map do |data|
+  school = School.create({full_address: data[:school] + ', NY', district: data[:district], score: data[:_overall_score]})
+  school.geocode_school
+end

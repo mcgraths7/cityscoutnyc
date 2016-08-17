@@ -1,7 +1,7 @@
+
 require "pry"
 
 class VotingDistrict < ApplicationRecord
-
   def crime_in_district
     Crime.filter_by_district(max_latitude, min_latitude, max_longitude, min_longitude)
   end
