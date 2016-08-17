@@ -10,17 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160816171547) do
+ActiveRecord::Schema.define(version: 20160816214758) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "accidents", force: :cascade do |t|
-    t.string  "borough"
-    t.integer "zip"
-    t.float   "latitude"
-    t.float   "longitude"
-    t.string  "full_address"
+    t.float  "latitude"
+    t.float  "longitude"
+    t.string "full_address"
   end
 
   create_table "citibikes", force: :cascade do |t|
@@ -71,6 +69,19 @@ ActiveRecord::Schema.define(version: 20160816171547) do
     t.float  "longitude"
     t.string "lines"
     t.string "full_address"
+  end
+
+  create_table "voting_districts", force: :cascade do |t|
+    t.float   "max_latitude"
+    t.float   "min_latitude"
+    t.float   "max_longitude"
+    t.float   "min_longitude"
+    t.integer "crime"
+    t.integer "schools"
+    t.integer "parks"
+    t.integer "subways"
+    t.integer "bikes"
+    t.integer "accidents"
   end
 
 end

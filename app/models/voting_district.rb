@@ -1,35 +1,29 @@
-require_relative '../../db/data/ny_voting_districts.rb'
 require "pry"
 
-class VotingDistrict
-  attr_reader :lat_max, :lat_min, :long_max, :long_min
-  def initialize(arr)
-    @lat_max, @lat_min, @long_max, @long_min = arr
-    @crime = crime_in_district.length
-  end
+class VotingDistrict < ApplicationRecord
 
   def crime_in_district
-    Crime.filter_by_district(lat_max, lat_min, long_max, long_min)
+    Crime.filter_by_district(max_latitude, min_latitude, max_longitude, min_longitude)
   end
 
   def bikes_in_district
-    Citibike.filter_by_district(lat_max, lat_min, long_max, long_min)
+    Citibike.filter_by_district(max_latitude, min_latitude, max_longitude, min_longitude)
   end
 
   def subways_in_district
-    Subway.filter_by_district(lat_max, lat_min, long_max, long_min)
+    Subway.filter_by_district(max_latitude, min_latitude, max_longitude, min_longitude)
   end
 
   def schools_in_district
-    School.filter_by_district(lat_max, lat_min, long_max, long_min)
+    School.filter_by_district(max_latitude, min_latitude, max_longitude, min_longitude)
   end
 
   def parks_in_district
-    Park.filter_by_district(lat_max, lat_min, long_max, long_min)
+    Park.filter_by_district(max_latitude, min_latitude, max_longitude, min_longitude)
   end
 
   def accidents_in_district
-    Accident.filter_by_district(lat_max, lat_min, long_max, long_min)
+    Accident.filter_by_district(max_latitude, min_latitude, max_longitude, min_longitude)
   end
 
 
