@@ -1,7 +1,16 @@
 
 require "pry"
 
+# def self.filter_by_district(lat_max, lat_min, long_max, long_min)
+#   Park.where('parks.latitude < ? AND parks.latitude > ? AND parks.longitude < ? AND parks.longitude > ? ',lat_max, lat_min, long_max, long_min )
+# end
+
 class VotingDistrict < ApplicationRecord
+
+  def self.find_correct_district(lat, long)
+    VotingDistrict.all.find_by('? < voting_districts.max_latitude AND ? > voting_districts.min_latitude AND ? < voting_districts.max_longitude AND ? > voting_districts.min_longitude', lat, lat, long, long)
+  end
+
   def crime_in_district
     Crime.filter_by_district(max_latitude, min_latitude, max_longitude, min_longitude)
   end
@@ -24,6 +33,18 @@ class VotingDistrict < ApplicationRecord
 
   def accidents_in_district
     Accident.filter_by_district(max_latitude, min_latitude, max_longitude, min_longitude)
+  end
+
+  def own_scores
+      scores = {safety: (self.crime + self.accidents) / 2,
+        education: self.schools,
+        transportation: self.bikes + self.subways / 2,
+        recreation: self.parks
+      }
+      averages = Score.averages
+      own_scores = scores.each_with_object({}) do |(key, fn), own_scores|
+        own_scores[key] = fn.fdiv(averages[key])
+      end
   end
 
 

@@ -1,1 +1,1 @@
-Dir["db/data/schoolData.rb"].each{|file| load file }
+Dir["db/data/*.rb"].each{|file| load file }
