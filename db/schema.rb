@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160817172901) do
+ActiveRecord::Schema.define(version: 20160817180033) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -45,12 +45,6 @@ ActiveRecord::Schema.define(version: 20160817172901) do
     t.string "full_address"
   end
 
-  create_table "points", force: :cascade do |t|
-    t.string "full_address"
-    t.float  "latitude"
-    t.float  "longitude"
-  end
-
   create_table "schools", force: :cascade do |t|
     t.integer  "district"
     t.float    "score"
@@ -76,6 +70,12 @@ ActiveRecord::Schema.define(version: 20160817172901) do
     t.float  "longitude"
     t.string "lines"
     t.string "full_address"
+  end
+
+  create_table "user_points", force: :cascade do |t|
+    t.string "full_address"
+    t.float  "latitude"
+    t.float  "longitude"
   end
 
   create_table "voting_districts", force: :cascade do |t|
