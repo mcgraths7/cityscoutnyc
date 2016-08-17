@@ -1,3 +1,5 @@
+require 'pry'
+
 [
   {
     "_overall_score": "27.0",
@@ -1593,11 +1595,6 @@
     "_overall_score": "29.9",
     "district": "10",
     "school": "P.S. 023 The New Children's School"
-  },
-  {
-    "_overall_score": "45.0",
-    "district": "10",
-    "school": "P.S. 024 Spuyten Duyvil"
   },
   {
     "_overall_score": "43.2",
@@ -6050,6 +6047,13 @@
     "school": "Bronx Charter School for Arts"
   }
 ].map do |data|
-  school = School.create({full_address: data[:school] + ', NY', district: data[:district], score: data[:_overall_score], latitude: nil, longitude: nil })
-  school.update(latitude: school.geocode[0], longitude: school.geocode[1])
+  sleep(0.2)
+  school = School.create(full_address: data[:school] + ', NY')
+  sleep(0.05)
+  if school.geocode
+    school.update(latitude: school.geocode.first, longitude: school.geocode.last)
+  else
+    school.destroy
+  end
 end
+

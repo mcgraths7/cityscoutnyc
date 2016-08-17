@@ -8,7 +8,7 @@ class School < ApplicationRecord
     School.where('schools.latitude < ? AND schools.latitude > ? AND schools.longitude < ? AND schools.longitude > ? ',lat_max, lat_min, long_max, long_min )
   end
   def geocode_school
-    binding.pry
     self.update(latitude: self.geocode[0], longitude: self.geocode[1])
   end
+
 end
