@@ -4,11 +4,24 @@ class Score < ApplicationRecord
   def self.get_average(category)
     case category
       when :crime
-        VotingDistrict.median(:crime)/VotingDistrict.average_area
+        avg = VotingDistrict.median(:crime)/VotingDistrict.average_area
+
       when :accidents
-        VotingDistrict.median(:accidents)/VotingDistrict.average_area
+        avg = VotingDistrict.median(:accidents)/VotingDistrict.average_area
+
+      when :parks
+        # avg = VotingDistrict.median(:parks)/VotingDistrict.average_area
+        avg = VotingDistrict.all.sum{ |vd| vd.parks}/VotingDistrict.all.length
+
+      when :subways
+        avg = VotingDistrict.all.sum{ |vd| vd.subways}/VotingDistrict.all.length
+      when :bikes
+        avg = VotingDistrict.all.sum{ |vd| vd.bikes}/VotingDistrict.all.length
+      when :schools
+        avg = VotingDistrict.median(:schools)
+
       else
-        VotingDistrict.median(:parks)/VotingDistrict.average_area
+        return "blah blah blah"
     end
 
   end
