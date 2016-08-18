@@ -3,7 +3,7 @@ Geocoder.configure(
 
   :google => {
 
-    :api_key => "AIzaSyAL5qL3vKhsQDQAp6WHRILAt3YWqFPlKgk"
+    :api_key => "AIzaSyD8xKxCBoyJniyUCSAHR7d-Bg-PYlOyOx4"
   }
 
 
