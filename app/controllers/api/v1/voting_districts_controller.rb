@@ -3,8 +3,7 @@ module Api
     class VotingDistrictsController < ApplicationController
         def index
           point = UserPoint.create(voting_districts_params)
-          binding.pry
-          district = VotingDistrict.find_correct_district(point.geocode.first, point.geocode.last)
+          district = VotingDistrict.find_correct_district(point.geocode[0], point.geocode[1])
           render json: district.own_scores
         end
 

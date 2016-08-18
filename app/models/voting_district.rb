@@ -38,7 +38,7 @@ class VotingDistrict < ApplicationRecord
   def own_scores
       scores = {safety: (self.crime + self.accidents) / 2,
         education: self.schools,
-        transportation: self.bikes + self.subways / 2,
+        transportation: (self.bikes + self.subways) / 2,
         recreation: self.parks
       }
       averages = Score.averages

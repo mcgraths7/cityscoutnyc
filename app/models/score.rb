@@ -6,7 +6,7 @@ class Score < ApplicationRecord
   end
 
   def self.averages
-    {safety: (get_average(:crime),  get_average(:accidents)) / 2, education: get_average(:schools), transportation: (get_average(:bikes) + get_average(:subways)) / 2, recreation: get_average(:parks)}
+    {safety: (get_average(:crime) +  get_average(:accidents)) / 2, education: get_average(:schools), transportation: (get_average(:bikes) + get_average(:subways)) / 2, recreation: get_average(:parks)}
   end
 end
 

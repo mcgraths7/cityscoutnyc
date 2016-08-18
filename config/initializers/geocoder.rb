@@ -2,7 +2,7 @@ Geocoder.configure(
   :timeout => 5,
 
   :google => {
-    :api_key => "AIzaSyD8xKxCBoyJniyUCSAHR7d-Bg-PYlOyOx4"
+    :api_key => "AIzaSyAL5qL3vKhsQDQAp6WHRILAt3YWqFPlKgk"
   }
 
 
