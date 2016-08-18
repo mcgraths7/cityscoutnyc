@@ -11,24 +11,51 @@ class VotingDistrict < ApplicationRecord
     VotingDistrict.all.find_by('? < voting_districts.max_latitude AND ? > voting_districts.min_latitude AND ? < voting_districts.max_longitude AND ? > voting_districts.min_longitude', lat, lat, long, long)
   end
 
+  def own_center
+    lat_center = (max_latitude + min_latitude) / 2
+    long_center = (max_longitude + min_longitude) / 2
+    center = [lat_center,long_center]
+    return center
+
+  end
+
+  def distance(lat1, lon1, lat2, lon2)
+    p = Math::PI/180
+    a = 0.5 - Math.cos((lat2 - lat1) * p)/2 +
+        Math.cos(lat1 * p) * Math.cos(lat2 * p) *
+            (1 - Math.cos((lon2 - lon1) * p))/2
+
+    return 12742 * Math.asin(Math.sqrt(a))
+  end
+
+  def closest_school
+    schools = School.all.map do |school|
+      distance = distance(school.latitude,school.longitude,own_center[0], own_center[1])
+    end
+    return School.find(schools.index(schools.min)
+    )
+  end
+
+  def subways_within_walking_distance
+    subways = Subway.all.select do |subway|
+      distance(subway.latitude, subway.longitude, own_center[0], own_center[1]) < 1.2
+    end.length
+  end
+
+  def bikes_within_walking_distance
+    bikes = Citibike.all.select do |bike|
+      distance(bike.latitude, bike.longitude, own_center[0], own_center[1]) < 1.2
+    end.length
+  end
+
+  def parks_within_walking_distance
+    parks = Park.all.select do |park|
+      distance(park.latitude, park.longitude, own_center[0], own_center[1]) < 2.5
+    end.length
+  end
+
   def crime_in_district
     Crime.filter_by_district(max_latitude, min_latitude, max_longitude, min_longitude)
-  end
-
-  def bikes_in_district
-    Citibike.filter_by_district(max_latitude, min_latitude, max_longitude, min_longitude)
-  end
-
-  def subways_in_district
-    Subway.filter_by_district(max_latitude, min_latitude, max_longitude, min_longitude)
-  end
-
-  def schools_in_district
-    School.filter_by_district(max_latitude, min_latitude, max_longitude, min_longitude)
-  end
-
-  def parks_in_district
-    Park.filter_by_district(max_latitude, min_latitude, max_longitude, min_longitude)
   end
 
   def accidents_in_district
@@ -47,18 +74,4 @@ class VotingDistrict < ApplicationRecord
       end
   end
 
-
-  # def get_box
-  #   boxes = []
-  #   coords = COORDS.strip.gsub("\"MULTIPOLYGON ((", "").gsub("))\"", "").gsub(/\s\n/, "")
-  #   coords = coords.split(/(\(|\))/).delete_if {|el| el.length < 50}
-  #   coords = coords.map do |coord|
-  #     new_coord = coord.split(/,?[\s\n]/).reject(&:empty?).map(&:to_f)
-  #
-  #     lats = new_coord.select { |c| c > 40}
-  #     longs = new_coord.select { |c| c < -72}
-  #     boxes << lats.select { |n| n == lats.max || n == lats.min} + longs.select { |n| n == longs.max || n == longs.min}
-  #   end
-  #   print boxes
-  # end
 end
