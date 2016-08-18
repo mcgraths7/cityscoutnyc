@@ -16,7 +16,7 @@ class VotingDistrict < ApplicationRecord
   end
 
   def self.median(category)
-    cats = VotingDistrict.all.pluck(category).sort
+    cats = VotingDistrict.all.pluck(category).compact.sort
     length = cats.length
     (cats[(length-1) / 2] + cats[length / 2] / 2.0)
   end
@@ -54,6 +54,7 @@ class VotingDistrict < ApplicationRecord
     subways = Subway.all.select do |subway|
       distance(subway.latitude, subway.longitude, own_center[0], own_center[1]) < 0.75
     end.length
+    
   end
 
   def bikes_within_walking_distance
@@ -76,16 +77,6 @@ class VotingDistrict < ApplicationRecord
     Accident.filter_by_district(max_latitude, min_latitude, max_longitude, min_longitude)
   end
 
-  def own_scores
-      scores = {safety: (self.crime + self.accidents) / 2,
-        education: self.schools,
-        transportation: (self.bikes + self.subways) / 2,
-        recreation: self.parks
-      }
-      averages = Score.averages
-      own_scores = scores.each_with_object({}) do |(key, fn), own_scores|
-        own_scores[key] = fn.fdiv(averages[key])
-      end
-  end
+
 
 end

@@ -5,7 +5,7 @@ class Score < ApplicationRecord
     case category
       when :crime
         avg = VotingDistrict.median(:crime)/VotingDistrict.average_area
-
+        
       when :accidents
         avg = VotingDistrict.median(:accidents)/VotingDistrict.average_area
 
@@ -23,7 +23,10 @@ class Score < ApplicationRecord
       else
         return "blah blah blah"
     end
+  end
 
+  def self.averages
+    {accidents: get_average(:accidents), bikes: get_average(:bikes), crime: get_average(:crime), parks: get_average(:parks), schools: get_average(:schools), subways: get_average(:subways)}
   end
 
   def self.percentile(category, district)
@@ -44,13 +47,19 @@ class Score < ApplicationRecord
 
   def self.school_percentile(district)
     scores = School.pluck(:score).compact.sort
-    binding.pry
+
     district_score = district[:schools]
     scores.index(district_score).fdiv(scores.length-1) * 100
   end
 
-  def self.crime_percentile
-
+  def self.own_scores(district)
+      scores = {accidents: percentile(:accidents, district),
+        crime: percentile(:crime, district),
+        bikes: percentile(:bikes, district),
+        parks: percentile(:parks, district),
+        schools: percentile(:schools, district),
+        subways: percentile(:subways, district)
+      }
   end
 
 end
