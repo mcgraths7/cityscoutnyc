@@ -27,13 +27,19 @@ class Score < ApplicationRecord
   end
 
   def self.percentile(category, district)
-    cats = VotingDistrict.pluck(category)
+    cats = VotingDistrict.pluck(category).compact.sort
     l = cats.length
     groups = cats.group_by {|cat| cat}.map{|k, v| v}
     value = district[category]
     group = groups.find {|group| group.include?(value)}
     i = groups.index(group)
-    i.fdiv(groups.length - 1) * 100
+    if category === :crime || category == :accidents
+      100 - (i.fdiv(groups.length - 1) * 100)
+    elsif category == :schools
+      school_percentile(district)
+    else
+      i.fdiv(groups.length - 1) * 100
+    end
   end
 
   def self.school_percentile(district)
@@ -41,6 +47,10 @@ class Score < ApplicationRecord
     binding.pry
     district_score = district[:schools]
     scores.index(district_score).fdiv(scores.length-1) * 100
+  end
+
+  def self.crime_percentile
+
   end
 
 end
