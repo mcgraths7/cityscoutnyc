@@ -26,6 +26,23 @@ class Score < ApplicationRecord
 
   end
 
+  def self.percentile(category, district)
+    cats = VotingDistrict.pluck(category)
+    l = cats.length
+    groups = cats.group_by {|cat| cat}.map{|k, v| v}
+    value = district[category]
+    group = groups.find {|group| group.include?(value)}
+    i = groups.index(group)
+    i.fdiv(groups.length - 1) * 100
+  end
+
+  def self.school_percentile(district)
+    scores = School.pluck(:score).compact.sort
+    binding.pry
+    district_score = district[:schools]
+    scores.index(district_score).fdiv(scores.length-1) * 100
+  end
+
 end
 
 
@@ -40,5 +57,3 @@ end
   # def self.averages
   #   {safety: (get_average(:crime) +  get_average(:accidents)) / 2, education: get_average(:schools), transportation: (get_average(:bikes) + get_average(:subways)) / 2, recreation: get_average(:parks)}
   # end
-
-
