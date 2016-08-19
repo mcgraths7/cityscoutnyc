@@ -1,10 +1,5 @@
 
 require "pry"
-
-# def self.filter_by_district(lat_max, lat_min, long_max, long_min)
-#   Park.where('parks.latitude < ? AND parks.latitude > ? AND parks.longitude < ? AND parks.longitude > ? ',lat_max, lat_min, long_max, long_min )
-# end
-
 class VotingDistrict < ApplicationRecord
 
   def self.find_correct_district(lat, long)
@@ -39,14 +34,14 @@ class VotingDistrict < ApplicationRecord
         Math.cos(lat1 * p) * Math.cos(lat2 * p) *
             (1 - Math.cos((lon2 - lon1) * p))/2
 
-    return 7917.5117 * Math.asin(Math.sqrt(a))
+    7917.5117 * Math.asin(Math.sqrt(a))
   end
 
   def closest_school_score
     schools = School.all.map do |school|
       distance = distance(school.latitude,school.longitude,own_center[0], own_center[1])
     end.sort
-    return School.find{ |school| !school.nil?}.score
+    School.find{ |school| !school.nil?}.score
 
   end
 
@@ -76,7 +71,5 @@ class VotingDistrict < ApplicationRecord
   def accidents_in_district
     Accident.filter_by_district(max_latitude, min_latitude, max_longitude, min_longitude)
   end
-
-
 
 end
