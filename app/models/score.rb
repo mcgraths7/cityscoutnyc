@@ -5,7 +5,7 @@ class Score < ApplicationRecord
     case category
       when :crime
         avg = VotingDistrict.median(:crime)/VotingDistrict.average_area
-        
+
       when :accidents
         avg = VotingDistrict.median(:accidents)/VotingDistrict.average_area
 
@@ -49,7 +49,8 @@ class Score < ApplicationRecord
     scores = School.pluck(:score).compact.sort
 
     district_score = district[:schools]
-    scores.index(district_score).fdiv(scores.length-1) * 100
+    closest_school_score = scores.find {|score| (district_score - score).abs < 0.2}
+    scores.index(closest_school_score).fdiv(scores.length-1) * 100
   end
 
   def self.own_scores(district)
