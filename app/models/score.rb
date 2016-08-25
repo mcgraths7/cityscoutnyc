@@ -26,12 +26,10 @@ class Score < ApplicationRecord
   end
 
   def self.averages
-    {accidents: get_average(:accidents), bikes: get_average(:bikes), crime: get_average(:crime), parks: get_average(:parks), schools: get_average(:schools), subways: get_average(:subways)}
+    {accidents: get_average(:accidents), bikes: get_average(:bikes),
+     crime: get_average(:crime), parks: get_average(:parks), schools: get_average(:schools), subways: get_average(:subways)}
   end
 
-  def self.scores(district)
-    district
-  end
 
   def self.score(category, district)
     district_categories = VotingDistrict.pluck(category).compact
@@ -58,12 +56,6 @@ class Score < ApplicationRecord
         50 + distance * 10
       end
     end
-  end
-
-  def self.school_percentile(district)
-    scores = School.pluck(:score).compact.sort
-    district_score = district[:schools]
-    scores.find {|score| (district_score - score).abs < 0.2}
   end
 
   def self.own_scores(district)
