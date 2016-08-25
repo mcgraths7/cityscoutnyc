@@ -32,8 +32,16 @@ class Score < ApplicationRecord
 
 
   def self.score(category, district)
+    averages = {
+      :accidents=>160.51549656127153,
+      :bikes=>5,
+      :crime=>321.03099312254307,
+      :parks=>40,
+      :schools=>40.5,
+      :subways=>4
+    }
     district_categories = VotingDistrict.pluck(category).compact
-    average = Score.get_average(category)
+    average = averages[category]
     variance = (district_categories.map { |a| (a - average)**2 }.reduce(:+))/(district_categories.length)
     stdev = variance ** (0.5)
     value = district[category]
@@ -59,7 +67,8 @@ class Score < ApplicationRecord
   end
 
   def self.own_scores(district)
-      scores = {accidents: score(:accidents, district),
+      scores = {
+        accidents: score(:accidents, district),
         crime: score(:crime, district),
         bikes: score(:bikes, district),
         parks: score(:parks, district),
