@@ -33,6 +33,7 @@ class Score < ApplicationRecord
     cats = VotingDistrict.pluck(category).compact.sort
     l = cats.length
     groups = cats.group_by {|cat| cat}.map{|k, v| v}
+    
     value = district[category]
     group = groups.find {|group| group.include?(value)}
     i = groups.index(group)
@@ -64,16 +65,3 @@ class Score < ApplicationRecord
   end
 
 end
-
-
-
-  #
-  # #
-  # #   vals = VotingDistrict.all.pluck(category).compact
-  # #
-  # #   vals.inject(0.0) {|result, num| result + num } / vals.size
-  # # end
-  #
-  # def self.averages
-  #   {safety: (get_average(:crime) +  get_average(:accidents)) / 2, education: get_average(:schools), transportation: (get_average(:bikes) + get_average(:subways)) / 2, recreation: get_average(:parks)}
-  # end
