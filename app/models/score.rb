@@ -33,50 +33,46 @@ class Score < ApplicationRecord
     district
   end
 
-  def self.percentile(category, district)
-    cats = VotingDistrict.pluck(category).compact.sort
-    l = cats.length
-    groups = cats.group_by {|cat| cat}.map{|k, v| v}
-    
+  def self.score(category, district)
+    district_categories = VotingDistrict.pluck(category).compact
+    average = Score.get_average(category)
+    variance = (district_categories.map { |a| (a - average)**2 }.reduce(:+))/(district_categories.length)
+    stdev = variance ** (0.5)
     value = district[category]
-    group = groups.find {|group| group.include?(value)}
-    i = groups.index(group)
+    distance = (value/stdev)
+    if distance > 5
+      distance = 5
+    elsif distance < 0
+      distance = 0
+    end
     if category == :crime || category == :accidents
-      if i < Score.get_average(category)
-        100 - (i.fdiv(Score.get_average(category)) * 100)
+      if value < average
+        50 + distance * 10
       else
-        100 - (Score.get_average(category).fdiv(i) * 100)
+        50 - distance * 10
       end
-      # 100 - (i.fdiv(groups.length - 1) * 100)
-      # 100 - (i.fdiv(Score.get_average(category)) * 100)
-    elsif category == :schools
-      school_percentile(district)
     else
-      # i.fdiv(groups.length - 1) * 100
-      if i < Score.get_average(category)
-        (i.fdiv(Score.get_average(category)) * 100)
+      if value < average
+        50 - distance * 10
       else
-        (Score.get_average(category)).fdiv(i) * 100
+        50 + distance * 10
       end
-
     end
   end
 
   def self.school_percentile(district)
     scores = School.pluck(:score).compact.sort
-
     district_score = district[:schools]
-    closest_school_score = scores.find {|score| (district_score - score).abs < 0.2}
-    scores.index(closest_school_score).fdiv(scores.length-1) * 100
+    scores.find {|score| (district_score - score).abs < 0.2}
   end
 
   def self.own_scores(district)
-      scores = {accidents: percentile(:accidents, district),
-        crime: percentile(:crime, district),
-        bikes: percentile(:bikes, district),
-        parks: percentile(:parks, district),
-        schools: percentile(:schools, district),
-        subways: percentile(:subways, district)
+      scores = {accidents: score(:accidents, district),
+        crime: score(:crime, district),
+        bikes: score(:bikes, district),
+        parks: score(:parks, district),
+        schools: score(:schools, district),
+        subways: score(:subways, district)
       }
   end
 
