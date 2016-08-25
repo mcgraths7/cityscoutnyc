@@ -1,3 +1,3 @@
 class VotingDistrictSerializer < ActiveModel::Serializer
-  attributes :own_scores
+  attributes :own_scores, :neighborhood, :boro
 end
