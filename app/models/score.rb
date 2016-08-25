@@ -59,7 +59,8 @@ class Score < ApplicationRecord
   end
 
   def self.own_scores(district)
-      scores = {accidents: score(:accidents, district),
+      scores = {
+        accidents: score(:accidents, district),
         crime: score(:crime, district),
         bikes: score(:bikes, district),
         parks: score(:parks, district),
