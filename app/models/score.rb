@@ -11,15 +11,14 @@ class Score < ApplicationRecord
 
       when :parks
         # avg = VotingDistrict.median(:parks)/VotingDistrict.average_area
-        avg = VotingDistrict.all.sum{ |vd| vd.parks}/VotingDistrict.all.length
+        avg = VotingDistrict.all.compact.sum{ |vd| vd.parks}/VotingDistrict.all.length
 
       when :subways
-        avg = VotingDistrict.all.sum{ |vd| vd.subways}/VotingDistrict.all.length
+        avg = VotingDistrict.all.compact.sum{ |vd| vd.subways}/VotingDistrict.all.length
       when :bikes
-        avg = VotingDistrict.all.sum{ |vd| vd.bikes}/VotingDistrict.all.length
-      when :schools
-        avg = VotingDistrict.median(:schools)
-
+        avg = VotingDistrict.all.compact.sum{ |vd| vd.bikes}/VotingDistrict.all.length
+      when :restaurants
+        avg = VotingDistrict.all.compact.sum{ |vd| vd.restaurants}/VotingDistrict.all.length
       else
         return "blah blah blah"
     end
@@ -27,17 +26,17 @@ class Score < ApplicationRecord
 
   def self.averages
     {accidents: get_average(:accidents), bikes: get_average(:bikes),
-     crime: get_average(:crime), parks: get_average(:parks), schools: get_average(:schools), subways: get_average(:subways)}
+     crime: get_average(:crime), parks: get_average(:parks), restaurants: get_average(:restaurants), subways: get_average(:subways)}
   end
 
 
   def self.score(category, district)
     averages = {
-      :accidents=>160.51549656127153,
+      :accidents=>160.55194245292316,
       :bikes=>5,
-      :crime=>321.03099312254307,
-      :parks=>40,
-      :schools=>40.5,
+      :crime=>321.1038849058463,
+      :parks=>57,
+      :restaurants=>53,
       :subways=>4
     }
     district_categories = VotingDistrict.pluck(category).compact
@@ -72,7 +71,7 @@ class Score < ApplicationRecord
         crime: score(:crime, district),
         bikes: score(:bikes, district),
         parks: score(:parks, district),
-        schools: score(:schools, district),
+        restaurants: score(:restaurants, district),
         subways: score(:subways, district)
       }
   end

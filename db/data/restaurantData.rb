@@ -61449,4 +61449,4 @@
     "Latitude": 40.7557,
     "Longitude": -73.8841
   }
-].map { |restaurant| Restaurant.create(name: restaurant[:Name], latitude: restaurant[:latitude], longitude: restaurant[:longitude]) }
+].map { |restaurant| Restaurant.create(name: restaurant[:Name], latitude: restaurant[:Latitude], longitude: restaurant[:Longitude]) }
