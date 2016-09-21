@@ -19,6 +19,9 @@ class Score < ApplicationRecord
         avg = VotingDistrict.all.compact.sum{ |vd| vd.bikes}/VotingDistrict.all.length
       when :restaurants
         avg = VotingDistrict.all.compact.sum{ |vd| vd.restaurants}/VotingDistrict.all.length
+      when :bars
+        avg = VotingDistrict.all.compact.sum{ |vd| vd.bars}/VotingDistrict.all.length
+
       else
         return "blah blah blah"
     end
@@ -38,7 +41,7 @@ class Score < ApplicationRecord
       :parks=>57,
       :restaurants=>53,
       :subways=>4,
-      :bars=>
+      :bars=>5
     }
     district_categories = VotingDistrict.pluck(category).compact
     average = averages[category]
