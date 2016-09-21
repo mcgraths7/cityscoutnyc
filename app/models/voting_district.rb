@@ -7,7 +7,7 @@ class VotingDistrict < ApplicationRecord
   end
 
   def self.average_area
-    VotingDistrict.all.sum{|vd| vd.own_area }/(VotingDistrict.all.length)
+    VotingDistrict.all.sum{|vd| vd.area }/(VotingDistrict.all.length)
   end
 
   def self.median(category)
@@ -16,13 +16,13 @@ class VotingDistrict < ApplicationRecord
     (cats[(length-1) / 2] + cats[length / 2] / 2.0)
   end
 
-  def own_area
+  def area
     h = distance(max_latitude, max_longitude, min_latitude, max_longitude)
     w = distance(min_latitude, min_longitude, max_latitude, min_longitude)
     h*w
   end
 
-  def own_center
+  def center
     lat_center = (max_latitude + min_latitude) / 2
     long_center = (max_longitude + min_longitude) / 2
     center = [lat_center,long_center]
@@ -38,10 +38,10 @@ class VotingDistrict < ApplicationRecord
   end
 
   def within_walking_distance(category, distance)
-    category.all.select { |item| distance(item.latitude, item.longitude, own_center[0], own_center[1]) < distance }.length
+    category.all.select { |item| distance(item.latitude, item.longitude, center[0], center[1]) < distance }.length
 
   end
-  
+
   def crime_in_district
     Crime.filter_by_district(max_latitude, min_latitude, max_longitude, min_longitude)
   end
