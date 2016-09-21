@@ -1,4 +1,4 @@
-require 'pry'
+
 class Score < ApplicationRecord
 
   def self.get_average(category)

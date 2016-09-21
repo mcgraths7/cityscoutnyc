@@ -1,5 +1,4 @@
 
-require "pry"
 class VotingDistrict < ApplicationRecord
 
   def self.find_correct_district(lat, long)
@@ -17,8 +16,8 @@ class VotingDistrict < ApplicationRecord
   end
 
   def area
-    h = distance(max_latitude, max_longitude, min_latitude, max_longitude)
-    w = distance(min_latitude, min_longitude, max_latitude, min_longitude)
+    h = distance_between_points(max_latitude, max_longitude, min_latitude, max_longitude)
+    w = distance_between_points(min_latitude, min_longitude, max_latitude, min_longitude)
     h*w
   end
 
@@ -28,7 +27,7 @@ class VotingDistrict < ApplicationRecord
     center = [lat_center,long_center]
   end
 
-  def distance(lat1, lon1, lat2, lon2)
+  def distance_between_points(lat1, lon1, lat2, lon2)
     p = Math::PI/180
     a = 0.5 - Math.cos((lat2 - lat1) * p)/2 +
         Math.cos(lat1 * p) * Math.cos(lat2 * p) *
@@ -38,8 +37,7 @@ class VotingDistrict < ApplicationRecord
   end
 
   def within_walking_distance(category, distance)
-    category.all.select { |item| distance(item.latitude, item.longitude, center[0], center[1]) < distance }.length
-
+    category.all.select { |item| distance_between_points(item.latitude, item.longitude, center[0], center[1]) < distance }.length
   end
 
   def crime_in_district
