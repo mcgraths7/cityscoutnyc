@@ -1,7 +1,7 @@
 
 class Score < ApplicationRecord
 
-  def self.get_average(category)
+  def self.get_average_for(category)
     case category
       when :crime
         avg = VotingDistrict.median(:crime)/VotingDistrict.average_area
@@ -25,11 +25,11 @@ class Score < ApplicationRecord
   end
 
   def self.averages
-    {accidents: get_average(:accidents), bikes: get_average(:bikes),
-     crime: get_average(:crime), parks: get_average(:parks), restaurants: get_average(:restaurants), subways: get_average(:subways)}
+    {accidents: get_average_for(:accidents), bikes: get_average_for(:bikes),
+     crime: get_average_for(:crime), parks: get_average_for(:parks), restaurants: get_average_for(:restaurants), subways: get_average_for(:subways)}
   end
 
-  def self.score(category, district)
+  def self.score_for(category, district)
     averages = {
       :accidents=>160.55194245292316,
       :bikes=>5,
@@ -66,12 +66,12 @@ class Score < ApplicationRecord
 
   def self.own_scores(district)
       scores = {
-        accidents: score(:accidents, district),
-        crime: score(:crime, district),
-        bikes: score(:bikes, district),
-        parks: score(:parks, district),
-        restaurants: score(:restaurants, district),
-        subways: score(:subways, district)
+        accidents: score_for(:accidents, district),
+        crime: score_for(:crime, district),
+        bikes: score_for(:bikes, district),
+        parks: score_for(:parks, district),
+        restaurants: score_for(:restaurants, district),
+        subways: score_for(:subways, district)
       }
   end
 
