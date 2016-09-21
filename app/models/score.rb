@@ -29,7 +29,6 @@ class Score < ApplicationRecord
      crime: get_average(:crime), parks: get_average(:parks), restaurants: get_average(:restaurants), subways: get_average(:subways)}
   end
 
-
   def self.score(category, district)
     averages = {
       :accidents=>160.55194245292316,

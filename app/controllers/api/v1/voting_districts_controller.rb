@@ -5,7 +5,8 @@ module Api
         def index
           point = UserPoint.create(voting_districts_params)
           district = VotingDistrict.find_correct_district(point.geocode[0], point.geocode[1])
-          render json: {own_score: Score.own_scores(district),
+          render json: {
+            own_score: Score.own_scores(district),
             averages: {
               :accidents=>160.55194245292316,
               :bikes=>5,

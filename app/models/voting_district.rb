@@ -37,38 +37,11 @@ class VotingDistrict < ApplicationRecord
     7917.5117 * Math.asin(Math.sqrt(a))
   end
 
-  def closest_school_score
-    schools = School.all.map do |school|
-      distance = distance(school.latitude,school.longitude,own_center[0], own_center[1])
-    end.sort
-    School.find{ |school| !school.nil?}.score
-
-  end
-
   def within_walking_distance(category, distance)
     category.all.select { |item| distance(item.latitude, item.longitude, own_center[0], own_center[1]) < distance }.length
 
   end
-
-  # def subs_within_walking_distance
-  #   subways = Subway.all.select do |subway|
-  #     distance(subway.latitude, subway.longitude, own_center[0], own_center[1]) < 0.75
-  #   end.length
-    
-  # end
-
-  # def bikes_within_walking_distance
-  #   bikes = Citibike.all.select do |bike|
-  #     distance(bike.latitude, bike.longitude, own_center[0], own_center[1]) < 0.75
-  #   end.length
-  # end
-
-  # def parks_within_walking_distance
-  #   parks = Park.all.select do |park|
-  #     distance(park.latitude, park.longitude, own_center[0], own_center[1]) < 1.25
-  #   end.length
-  # end
-
+  
   def crime_in_district
     Crime.filter_by_district(max_latitude, min_latitude, max_longitude, min_longitude)
   end

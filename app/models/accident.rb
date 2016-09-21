@@ -3,3 +3,6 @@ class Accident < ApplicationRecord
     Accident.where('accidents.latitude < ? AND accidents.latitude > ? AND accidents.longitude < ? AND accidents.longitude > ? ',lat_max, lat_min, long_max, long_min )
   end
 end
+
+
+
