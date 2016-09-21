@@ -26,7 +26,8 @@ class Score < ApplicationRecord
 
   def self.averages
     {accidents: get_average_for(:accidents), bikes: get_average_for(:bikes),
-     crime: get_average_for(:crime), parks: get_average_for(:parks), restaurants: get_average_for(:restaurants), subways: get_average_for(:subways)}
+     crime: get_average_for(:crime), parks: get_average_for(:parks), restaurants: get_average_for(:restaurants), 
+     subways: get_average_for(:subways), bars: get_average_for(:bars)}
   end
 
   def self.score_for(category, district)
@@ -36,7 +37,8 @@ class Score < ApplicationRecord
       :crime=>321.1038849058463,
       :parks=>57,
       :restaurants=>53,
-      :subways=>4
+      :subways=>4,
+      :bars=>
     }
     district_categories = VotingDistrict.pluck(category).compact
     average = averages[category]
@@ -71,7 +73,8 @@ class Score < ApplicationRecord
         bikes: score_for(:bikes, district),
         parks: score_for(:parks, district),
         restaurants: score_for(:restaurants, district),
-        subways: score_for(:subways, district)
+        subways: score_for(:subways, district),
+        bars: score_for(:bars, district)
       }
   end
 
