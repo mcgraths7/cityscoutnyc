@@ -47,5 +47,4 @@ class VotingDistrict < ApplicationRecord
   def accidents_in_district
     Accident.filter_by_district(max_latitude, min_latitude, max_longitude, min_longitude)
   end
-
 end

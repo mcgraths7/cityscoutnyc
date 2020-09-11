@@ -10,7 +10,6 @@ class Score < ApplicationRecord
         avg = VotingDistrict.median(:accidents)/VotingDistrict.average_area
 
       when :parks
-        # avg = VotingDistrict.median(:parks)/VotingDistrict.average_area
         avg = VotingDistrict.all.compact.sum{ |vd| vd.parks}/VotingDistrict.all.length
 
       when :subways
@@ -23,7 +22,7 @@ class Score < ApplicationRecord
         avg = VotingDistrict.all.compact.sum{ |vd| vd.bars}/VotingDistrict.all.length
 
       else
-        return "blah blah blah"
+        return nil
     end
   end
 
@@ -34,15 +33,7 @@ class Score < ApplicationRecord
   end
 
   def self.score_for(category, district)
-    averages = {
-      :accidents=>160.55194245292316,
-      :bikes=>5,
-      :crime=>321.1038849058463,
-      :parks=>57,
-      :restaurants=>53,
-      :subways=>4,
-      :bars=>5
-    }
+    averages = Score.averages
     district_categories = VotingDistrict.pluck(category).compact
     average = averages[category]
     variance = (district_categories.map { |a| (a - average)**2 }.reduce(:+))/(district_categories.length)

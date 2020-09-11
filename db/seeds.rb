@@ -1,11 +1,62 @@
-# Dir["db/data/accidentData.rb"].each {|file|  load file }
-# Dir["db/data/citibikeData.rb"].each {|file|  load file }
-# Dir["db/data/crimeData.rb"].each {|file|  load file }
-# Dir["db/data/parkData.rb"].each {|file|  load file }
-# Dir["db/data/restaurantData.rb"].each {|file|  load file }
-# Dir["db/data/subwayData.rb"].each {|file|  load file }
-# Dir["db/data/districtData.rb"].each {|file|  load file }
-# Dir["db/data/barData.rb"].each {|file|  load file }
+puts '================='
+puts 'loading accident data'
+puts '================='
+Dir["db/data/accidentData.rb"].each {|file|  load file }
+puts '================='
+puts 'accident data loaded'
+puts '================='
+puts '================='
+puts 'loading citibike data'
+puts '================='
+Dir["db/data/citibikeData.rb"].each {|file|  load file }
+puts '================='
+puts 'citibike data loaded'
+puts '================='
+puts '================='
+puts 'loading crime data'
+puts '================='
+Dir["db/data/crimeData.rb"].each {|file|  load file }
+puts '================='
+puts 'crime data loaded'
+puts '================='
+puts '================='
+puts 'loading park data'
+puts '================='
+Dir["db/data/parkData.rb"].each {|file|  load file }
+puts '================='
+puts 'park data loaded'
+puts '================='
+puts '================='
+puts 'loading restaurant data'
+puts '================='
+Dir["db/data/restaurantData.rb"].each {|file|  load file }
+puts '================='
+puts 'restaurant data loaded'
+puts '================='
+puts '================='
+puts 'loading subway data'
+puts '================='
+Dir["db/data/subwayData.rb"].each {|file|  load file }
+puts '================='
+puts 'subway data loaded'
+puts '================='
+puts '================='
+puts 'loading district data'
+puts '================='
+Dir["db/data/districtData.rb"].each {|file|  load file }
+puts '================='
+puts 'district data loaded'
+puts '================='
+puts 'loading bar data'
+puts '================='
+Dir["db/data/barData.rb"].each {|file|  load file }
+puts '================='
+puts 'bar data loaded'
+puts '================='
+puts 'loading walking distance data'
+puts '================='
 VotingDistrict.all.each do |vd|
     vd.update(bars: vd.within_walking_distance(Bar, 0.5))
 end
+puts '================='
+puts 'walking distance data updated'
