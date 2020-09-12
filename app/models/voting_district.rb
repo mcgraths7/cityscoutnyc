@@ -2,7 +2,7 @@
 class VotingDistrict < ApplicationRecord
 
   def self.find_correct_district(lat, long)
-    VotingDistrict.all.find_by('? < voting_districts.max_latitude AND ? > voting_districts.min_latitude AND ? < voting_districts.max_longitude AND ? > voting_districts.min_longitude', lat, lat, long, long)
+    VotingDistrict.where('? < voting_districts.max_latitude AND ? > voting_districts.min_latitude AND ? < voting_districts.max_longitude AND ? > voting_districts.min_longitude', lat, lat, long, long)
   end
 
   def self.average_area
